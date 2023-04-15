@@ -1,29 +1,29 @@
 <template>
-  <div class="flex flex-col justify-center items-center text-center  bg-slate-900 h-screen" style="font-size: 24px;">
+  <div class="flex flex-col justify-center items-center text-center  bg-slate-900 h-screen text-2xl">
+    <video controls autoplay loop ref="video"></video>
     <div class="text-white mb-10 w-24">
-    Volume: {{volume}}
+    Volume: {{Math.round(volume*100)}}
   </div>
   <div class="volume-control" :style="{ transform: `rotate(${rotate}deg)` }" ref="volumeControl" @mousedown="handleMouseDown" @mouseup="handleMouseUp">
     <div class="slider-container">
-      <input disabled type="range" min="0" max="100" step="1" v-model="volume" class="volume-slider">
+      <input disabled type="range" min="0" max="1" step="0.01" v-model="volume" class="volume-slider">
     </div>
   </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watch, Ref } from 'vue';
+import { ref, computed, onMounted, watch, Ref } from 'vue';
+import { useMediaControls } from '@vueuse/core'
 
-const volume = ref(50);
-const top = computed(() => (window.innerHeight / 2) - 50);
-const left = computed(() => (window.innerWidth / 2) - 100);
 const rotate = ref(0);
-const clicked = ref({left: false, right: false});
 const rotationLimit = 25;
 let interval: any = null;
-let velocity = 0;
 const gravity = 0.02;
-const resistance = 0.95;
+const video = ref()
+const { volume } = useMediaControls(video, { 
+  src: '/rickroll.mp4',
+})
 
 let volumeControl = ref<HTMLElement | null>(null) as Ref<HTMLElement | null>;
   
@@ -54,18 +54,22 @@ function updateVolumeControlElement() {
 watch(() => rotate.value, () => {
   if(rotate.value > 0){
     interval = setInterval(() => {
-      if(volume.value < 100){
-      volume.value+=gravity*rotate.value;
+      if(volume.value < 1){
+      volume.value+=(gravity*rotate.value)/100;
       }
     },5)
   }
   if(rotate.value < 0){
     interval = setInterval(() => {
       if(volume.value > 0 && rotate.value < -1){
-      volume.value+=gravity*rotate.value;
+      volume.value+=(gravity*rotate.value)/100;
       }
     },5)
   }
+})
+
+onMounted(() => {
+  volume.value = 0.5;
 })
 
 </script>
