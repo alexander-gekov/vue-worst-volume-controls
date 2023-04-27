@@ -19,38 +19,42 @@ const handleVolumeChange = (value: number) => {
 </script>
 
 <template>
-    <div
-        class="flex flex-col items-center text-center bg-slate-800 text-white text-2xl p-10"
-    >
-        <div class="flex flex-col items-center text-center">
-            <video controlslist="" loop ref="video"></video>
-            <div class="mt-5 mb-10 w-24">
+    <div class="flex justify-center bg-slate-800 text-white h-screen">
+        <div
+            class="flex flex-col items-center text-center pt-10 overflow-hidden w-full"
+        >
+            <video controls autoplay loop ref="video"></video>
+            <div class="mt-5 mb-10 w-24 text-2xl">
                 Volume: {{ Math.round(volume * 100) }}
             </div>
         </div>
-        <div class="border-2 border-dashed w-full p-4 my-4">
-            <SliderVolume
-                :volume="volume"
-                @volume-changed="handleVolumeChange"
-            />
-        </div>
-        <div class="border-2 border-dashed w-full p-4 my-4">
-            <RandomVolume
-                :volume="volume"
-                @volume-changed="handleVolumeChange"
-            />
-        </div>
-        <div class="border-2 border-dashed w-full p-4 my-4">
-            <RadioButtonsVolume
-                :volume="volume"
-                @volume-changed="handleVolumeChange"
-            />
-        </div>
-        <div class="border-2 border-dashed w-full p-4 my-4">
-            <LocationVolume @volume-changed="handleVolumeChange" />
-        </div>
-        <div class="border-2 border-dashed w-full p-4 my-4">
-            <SpinningWheelVolume @volume-changed="handleVolumeChange" />
+        <div
+            class="flex flex-col items-center text-center text-2xl p-10 overflow-y-auto w-full"
+        >
+            <div class="border-2 border-dashed w-full py-20 lg:py-64 my-4">
+                <LocationVolume @volume-changed="handleVolumeChange" />
+            </div>
+            <div class="border-2 border-dashed w-full py-20 lg:py-64 my-4">
+                <SliderVolume
+                    :volume="volume"
+                    @volume-changed="handleVolumeChange"
+                />
+            </div>
+            <div class="border-2 border-dashed w-full py-20 lg:py-64 my-4">
+                <RandomVolume
+                    :volume="volume"
+                    @volume-changed="handleVolumeChange"
+                />
+            </div>
+            <div class="border-2 border-dashed w-full py-20 lg:py-64 my-4">
+                <RadioButtonsVolume
+                    :volume="volume"
+                    @volume-changed="handleVolumeChange"
+                />
+            </div>
+            <div class="border-2 border-dashed w-full py-64 my-4">
+                <SpinningWheelVolume @volume-changed="handleVolumeChange" />
+            </div>
         </div>
     </div>
 </template>

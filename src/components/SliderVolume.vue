@@ -1,6 +1,6 @@
 <template>
     <div
-        class="flex flex-row justify-center items-center bg-lightgray p-20 pl-40 pr-40 transition-transform duration-300 ease-in-out"
+        class="flex flex-row justify-center items-center bg-lightgray lg:p-20 lg:pl-40 lg:pr-40 transition-transform duration-300 ease-in-out"
         :style="{ transform: `rotate(${rotate}deg)` }"
         ref="volumeControl"
         @mousedown="handleMouseDown"
@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch, Ref } from 'vue';
+import { ref, computed, watch, Ref } from 'vue';
 
 const props = defineProps<{
     volume: number;
